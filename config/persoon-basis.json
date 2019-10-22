@@ -1,0 +1,17 @@
+[
+  {
+    "name": "persoon-basis",
+    "type": "ap",
+    "eap": "OSLO-Persoon-Basis-AP.eap",
+    "diagram": "OSLO-Persoon-Basis",
+    "template": "persoon-basis-ap.j2",
+    "title": "Persoon Basis",
+    "publication-state": "https://data.vlaanderen.be/id/concept/StandaardStatus/OntwerpdocumentInOntwikkeling",
+    "publication-date": "TBD",
+    "contributors-file": "stakeholders.csv",
+    "contributors-column": "Persoon",
+    "site": "site-skeleton",
+    "feedbackurl": "https://github.com/informatievlaanderen/OSLO-Discussion",
+    "standaardregisterurl": "https://data.vlaanderen.be/standaarden/kandidaat-standaarden/applicatieprofiel-persoon-basis/applicatieprofiel-persoon-basis.html"
+  }
+]
