@@ -13,8 +13,11 @@ jobs:
           name: Get latest commit hash of the repository
           command: |
             export COMMIT=$(git rev-parse --verify HEAD)
-            echo $COMMIT
-      - run: echo $COMMIT
+            echo $COMMIT > commit.txt
+      - run:
+          name: Update the standards register with latest commit
+          command: |
+
   push-to-repository:
     docker:
       - image: circleci/node
