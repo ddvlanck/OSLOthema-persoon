@@ -12,7 +12,7 @@ PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 for file in $(ls -p | grep -v /); do
   if [ $(jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash' "$ROOTDIR/tmp-register.json") ]
   then
-    UPDATED_OBJECT=$(jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash = $CURRENT_COMMIT' "$ROOTDIR/tmp-register.json" | jq .)
+    UPDATED_OBJECT=$(jq --arg file "$file" --arg CURRENT_COMMIT "$CURRENT_COMMIT" -r '.[] | select(.configuration == $file) | .commitHash = $CURRENT_COMMIT' "$ROOTDIR/tmp-register.json" | jq .)
     echo "RESULT: "
     echo "$UPDATED_OBJECT"
     jq --arg object "$UPDATED_OBJECT" '. |= .+ [$object]' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
