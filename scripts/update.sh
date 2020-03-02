@@ -15,7 +15,7 @@ for file in $(ls -p | grep -v /); do
     UPDATED_OBJECT=$(jq --arg file "$file" --arg CURRENT_COMMIT "$CURRENT_COMMIT" -r '.[] | select(.configuration == $file) | .commitHash = $CURRENT_COMMIT' "$ROOTDIR/tmp-register.json" | jq .)
     echo "RESULT: "
     echo "$UPDATED_OBJECT"
-    jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '. |= .+ [$UPDATED_OBJECT]' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
+    jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '. |= .+ $UPDATED_OBJECT' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
     cat "$ROOTDIR/tmp.json"
 
 ##TODO: UPDATED OBJECT SHOULD BE FORMATTED
