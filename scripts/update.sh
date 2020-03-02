@@ -12,7 +12,7 @@ PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 for file in $(ls -p | grep -v /); do
   if [ $(jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash' "$ROOTDIR/tmp-register.json") ]
   then
-    jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash = "test1234"' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
+    jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash = "test1234"' "$ROOTDIR/tmp-register.json" >> "$ROOTDIR/tmp-register.json"
     cat "$ROOTDIR/tmp.json"
     echo "$file was changed and is present"
   else
