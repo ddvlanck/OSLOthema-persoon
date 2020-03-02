@@ -10,13 +10,17 @@ PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 
 changedFiles="$(git diff --name-only "$PREV_COMMIT")"
 
-while read file; do
+while IFS= read -r line; do
+    echo "Text read from file: $line"
+done < "$changedFiles"
 
- echo "$file changed";
+#while read file; do
+
+# echo "$file changed";
   #if [ $(jq -r '.[] | select(.configuration == "$file") | .commitHash' "$ROOTDIR/tmp-register.json") -ne "" ]
   #then
   #  echo "$file was changed and is also used as configuration file in standards register"
   #else
   #  echo "$file was changed, but is not in standards register"
   #fi
-done < "$changedFiles"
+#done < "$changedFiles"
