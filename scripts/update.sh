@@ -10,7 +10,6 @@ PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 
 
 for file in $(ls -p | grep -v /); do
-  jq --arg file "$file" -r -c '.[] | select(.configuration == $file) | .commitHash' /tmp/
 workspace/tmp-register.json
   if [ $(jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash' "$ROOTDIR/tmp-register.json") -ne "" ]
   then
