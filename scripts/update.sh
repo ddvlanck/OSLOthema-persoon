@@ -9,13 +9,13 @@ CURRENT_COMMIT="$(git rev-parse --verify HEAD)"
 PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 
 
-for file in $(find . -maxdepth 1 -type f); do
+for file in $(ls -p | grep -v /); do
   if [ $(jq -r '.[] | select(.configuration == "$file") | .commitHash' "$ROOTDIR/tmp-register.json") -ne "" ]
   then
     echo "$file was changed and is present"
   else
     echo "$file was changed and not present"
-  fi  
+  fi
 done
 
 #while read file; do
