@@ -10,7 +10,7 @@ PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 
 changedFiles="$(git diff --name-only "$PREV_COMMIT")"
 
-while read -r file; do
+while read file; do
 
  echo "$file changed";
   #if [ $(jq -r '.[] | select(.configuration == "$file") | .commitHash' "$ROOTDIR/tmp-register.json") -ne "" ]
