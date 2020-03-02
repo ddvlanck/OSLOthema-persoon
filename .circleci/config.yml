@@ -70,5 +70,4 @@ workflows:
   version: 2
   update_standards_register:
     jobs:
-      - checkout
       - push-update-to-standards-register
