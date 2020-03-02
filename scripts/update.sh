@@ -8,11 +8,15 @@ curl -o "$ROOTDIR/tmp-register.json" https://raw.githubusercontent.com/ddvlanck/
 CURRENT_COMMIT="$(git rev-parse --verify HEAD)"
 PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 
-changedFiles="$(git diff --name-only "$PREV_COMMIT")"
 
-while IFS= read -r line; do
-    echo "Text read from file: $line"
-done < "$changedFiles"
+for file in $(find . -maxdepth 1 -type f); do
+  if [ $(jq -r '.[] | select(.configuration == "$file") | .commitHash' "$ROOTDIR/tmp-register.json") -ne "" ]
+  then
+    echo "$file was changed and is present"
+  else
+    echo "$file was changed and not present"
+  fi  
+done
 
 #while read file; do
 
