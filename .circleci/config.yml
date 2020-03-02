@@ -5,18 +5,8 @@ jobs:
       - image: circleci/node
     steps:
       - checkout
-      - run: mkdir -p /tmp/workspace
-      - run:
-          name: Get standards register configuration
-          command: curl -o /tmp/workspace/tmp-register.json https://raw.githubusercontent.com/ddvlanck/OSLO-StandaardenGeneral/master/standaardenregister.json
-      - run:
-          name: Get latest commit hash of the repository
-          command: |
-            export COMMIT=$(git rev-parse --verify HEAD)
-            echo $COMMIT > commit.txt
-      - run:
-          name: Update the standards register with latest commit
-          command: |
+      - run: chmod -R 777 $PWD/scripts
+      - run: $PWD/scripts/update.sh /tmp/workspace
 
   push-to-repository:
     docker:
