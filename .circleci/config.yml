@@ -2,10 +2,10 @@ version: 2
 jobs:
   push-update-to-standards-register:
     docker:
-      - imag: circleci/node
+      - image: circleci/node
     steps:
       - checkout
-      - mkdir -p /tmp/workspace
+      - run: mkdir -p /tmp/workspace
       - run:
           name: Get standards register configuration
           command: curl -o /tmp/workspace/tmp-register.json https://raw.githubusercontent.com/ddvlanck/OSLO-StandaardenGeneral/master/standaardenregister.json
