@@ -11,10 +11,9 @@ jobs:
           command: curl -o /tmp/workspace/tmp-register.json https://raw.githubusercontent.com/ddvlanck/OSLO-StandaardenGeneral/master/standaardenregister.json
       - run:
           name: Get latest commit hash of the repository
-          command: COMMIT=$(git rev-parse --verify HEAD)
-      - run:
-          name: Print out latest commit
-          command: echo $COMMIT
+          command: |
+            export COMMIT=$(git rev-parse --verify HEAD)
+            echo $COMMIT
   push-to-repository:
     docker:
       - image: circleci/node
