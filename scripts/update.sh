@@ -12,10 +12,11 @@ changedFiles="$(git diff --name-only "$PREV_COMMIT")"
 
 while read -r file; do
 
-  if [ $(jq -r '.[] | select(.configuration == "$file") | .commitHash' "$ROOTDIR/tmp-register.json") -ne "" ]
-  then
-    echo "$file was changed and is also used as configuration file in standards register"
-  else
-    echo "$file was changed, but is not in standards register"
-  fi
+ echo "$file changed";
+  #if [ $(jq -r '.[] | select(.configuration == "$file") | .commitHash' "$ROOTDIR/tmp-register.json") -ne "" ]
+  #then
+  #  echo "$file was changed and is also used as configuration file in standards register"
+  #else
+  #  echo "$file was changed, but is not in standards register"
+  #fi
 done < "$changedFiles"
