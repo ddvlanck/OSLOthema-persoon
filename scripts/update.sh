@@ -20,6 +20,8 @@ for file in $(ls -p | grep -v /); do
   fi
 done
 
+echo "IM DONE"
+
 #while read file; do
 
 # echo "$file changed";
