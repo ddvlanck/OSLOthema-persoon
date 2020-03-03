@@ -52,3 +52,6 @@ workflows:
   update_standards_register:
     jobs:
       - update-standards-register
+      - push-update:
+          requires:
+            - update-standards-register
