@@ -3,41 +3,17 @@ ROOTDIR=$1
 
 mkdir -p "$ROOTDIR"
 
-curl -o "$ROOTDIR/tmp-register.json" https://raw.githubusercontent.com/ddvlanck/OSLO-StandaardenGeneral/master/standaardenregister.json
+curl -o "$ROOTDIR/standaardenregister.json" https://raw.githubusercontent.com/ddvlanck/OSLO-StandaardenGeneral/master/standaardenregister.json
 
 CURRENT_COMMIT="$(git rev-parse --verify HEAD)"
-PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 
 
 for file in $(ls -p | grep -v /); do
-  if [ $(jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash' "$ROOTDIR/tmp-register.json") ]
+  if [ $(jq --arg file "$file" -r '.[] | select(.configuration == $file)' "$ROOTDIR/standaardenregister.json") ]
   then
-    jq --arg file "$file" --arg COMMIT "$CURRENT_COMMIT" '. | map(if .configuration == $file then . + {"commitHash" : $COMMIT} else . end)' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/updated-register.json"
-    #UPDATED_OBJECT=$(jq --arg file "$file" --arg CURRENT_COMMIT "$CURRENT_COMMIT" --compact-output '.[] | select(.configuration == $file) | .commitHash = $CURRENT_COMMIT' "$ROOTDIR/tmp-register.json")
-### TODO: find way to merge new object in array , current method is not working properly
-    #echo "RESULT: "
-    #jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '. |= .+ [$UPDATED_OBJECT]' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
-    #jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '.[] + $UPDATED_OBJECT | unique_by(.configuration)' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
-    #
-    # cat "$ROOTDIR/tmp.json"
-    cat "$ROOTDIR/updated-register.json"
-##TODO: UPDATED OBJECT SHOULD BE FORMATTED
-
-    echo "$file was changed and is present"
+    jq --arg file "$file" --arg COMMIT "$CURRENT_COMMIT" '. | map(if .configuration == $file then . + {"commitHash" : $COMMIT} else . end)' "$ROOTDIR/standaardenregister.json" > "$ROOTDIR/updated-register.json"
   else
-    echo "$file was changed and not present"
+    echo "$file is not present in the standards register"
   fi
 done
 
-echo "IM DONE"
-
-#while read file; do
-
-# echo "$file changed";
-  #if [ $(jq -r '.[] | select(.configuration == "$file") | .commitHash' "$ROOTDIR/tmp-register.json") -ne "" ]
-  #then
-  #  echo "$file was changed and is also used as configuration file in standards register"
-  #else
-  #  echo "$file was changed, but is not in standards register"
-  #fi
-#done < "$changedFiles"

@@ -1,14 +1,17 @@
 version: 2
 jobs:
-  push-update-to-standards-register:
+  update-standards-register:
     docker:
       - image: circleci/node
     steps:
       - checkout
       - run: chmod -R 777 $PWD/scripts
       - run: $PWD/scripts/update.sh /tmp/workspace
-
-  push-to-repository:
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - updated-register.json
+  push-update:
     docker:
       - image: circleci/node
     steps:
@@ -22,45 +25,33 @@ jobs:
           name: Checkout target repo
           workdir: /tmp
           command: |
-            rm -rf OSLO-StandaardenGenerated
-            git clone git@github.com:ddvlanck/OSLO-StandaardenGenerated.git
+            rm -rf OSLO-StandaardenGeneral
+            git clone git@github.com:ddvlanck/OSLO-StandaardenGeneral.git
       - run:
-          name: Clean the generated directory
-          workdir: /tmp/OSLO-StandaardenGenerated
+          name: Clean the directory
+          workdir: /tmp/OSLO-StandaardenGeneral
           command: |
             git fetch origin
-      #            if [ "`cat /tmp/workspace/haschangedpublications.json`" == "false" ] ; then git rm -r --force * ; fi
       - run:
           name: Copy generated assets
           workdir: /tmp/workspace
           command: |
-            mkdir -p /tmp/OSLO-StandaardenGenerated/erkende-standaard
-            mkdir -p /tmp/OSLO-StandaardenGenerated/kandidaat-standaard
-            mkdir -p /tmp/OSLO-StandaardenGenerated/standaard-in-ontwikkeling
-            if [ -d html_pages/erkende-standaard ] ; then if [ ! "$(ls -A html_pages/erkende-standaard)" ] ; then echo "Directory html_pages/erkende-standaard is empty" ; else cp -R html_pages/erkende-standaard/* /tmp/OSLO-StandaardenGenerated/erkende-standaard/ ; fi fi
-            if [ -d html_pages/kandidaat-standaard ] ; then if [ ! "$(ls -A html_pages/kandidaat-standaard)" ] ; then echo "Directory html_pages/kandidaat-standaard is empty" ; else cp -R html_pages/kandidaat-standaard/* /tmp/OSLO-StandaardenGenerated/kandidaat-standaard/ ; fi fi
-            if [ -d html_pages/standaard-in-ontwikkeling ] ; then if [ ! "$(ls -A html_pages/standaard-in-ontwikkeling)" ] ; then echo "Directory html_pages/standaard-in-ontwikkeling is empty" ; else cp -R html_pages/standaard-in-ontwikkeling/* /tmp/OSLO-StandaardenGenerated/standaard-in-ontwikkeling/ ; fi fi
-
+            if [ -f updated-register.json ] ; then cp updated-register.json /tmp/OSLO-StandaardenGeneral/standaardenregister.json ; fi
       - run:
-          name: Insert the commit
-          command: |
-            export TAG=`echo "${CIRCLE_SHA1}"`
-            echo "{\"commit\" : \"$TAG\"}" > /tmp/OSLO-StandaardenGenerated/commit.json
-      - run:
-          name: Push results to Github repository OSLO-Generated
-          workdir: /tmp/OSLO-StandaardenGenerated
+          name: Push results to Github repository OSLO-General
+          workdir: /tmp/OSLO-StandaardenGeneral
           command: |
             git config user.email "vanlanckdw@aocsw323"
             git config user.name "Circle CI Builder"
             git add .
             git status
-            git commit -m "Applying changes from commit ${CIRCLE_SHA1}" --allow-empty
-            export TAG=`echo "${CIRCLE_SHA1}" | cut -c1-15`
-            git tag "${TAG}"
+            git commit -m "Applying changes from OSLOtheme repository ${CIRCLE_PROJECT_REPONAME}" --allow-empty
             git push --force origin "${CIRCLE_BRANCH}"
-            git push --tags
 workflows:
   version: 2
   update_standards_register:
     jobs:
-      - push-update-to-standards-register
+      - update-standards-register
+      - push-update:
+          requires:
+            - update-standards-register
