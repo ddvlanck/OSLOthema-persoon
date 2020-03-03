@@ -12,11 +12,11 @@ PREV_COMMIT="$(git rev-parse --verify HEAD~1)"
 for file in $(ls -p | grep -v /); do
   if [ $(jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash' "$ROOTDIR/tmp-register.json") ]
   then
-    UPDATED_OBJECT=$(jq --arg file "$file" --arg CURRENT_COMMIT "$CURRENT_COMMIT" -r '.[] | select(.configuration == $file) | .commitHash = $CURRENT_COMMIT | tostring' "$ROOTDIR/tmp-register.json")
+    UPDATED_OBJECT=$(jq --arg file "$file" --arg CURRENT_COMMIT "$CURRENT_COMMIT" --compact-output '.[] | select(.configuration == $file) | .commitHash = $CURRENT_COMMIT' "$ROOTDIR/tmp-register.json")
 ### TODO: find way to merge new object in array , current method is not working properly
     echo "RESULT: "
-    #jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '. |= .+ [$UPDATED_OBJECT]' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
-    jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '.[] + $UPDATED_OBJECT | unique_by(.configuration)' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
+    jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '. |= .+ [$UPDATED_OBJECT]' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
+    #jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '.[] + $UPDATED_OBJECT | unique_by(.configuration)' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
     cat "$ROOTDIR/tmp.json"
 
 ##TODO: UPDATED OBJECT SHOULD BE FORMATTED
