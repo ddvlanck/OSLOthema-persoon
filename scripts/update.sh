@@ -13,7 +13,7 @@ echo "New commit hash is: $CURRENT_COMMIT"
 
 
 for file in $(ls -p | grep -v /); do
-  if [ $(jq --arg file "$file" -r '.[] | select(.configuration == $file)' "$ROOTDIR/standaardenregister.json") ]
+  if [ $(jq --arg file "$file" -r '.[] | select(.configuration == $file) | .commitHash' "$ROOTDIR/standaardenregister.json") ]
   then
     jq --arg file "$file" --arg COMMIT "$CURRENT_COMMIT" '. | map(if .configuration == $file then . + {"commitHash" : $COMMIT} else . end)' "$ROOTDIR/standaardenregister.json" > "$ROOTDIR/updated-register.json"
     echo "Printing standards register"
