@@ -46,7 +46,7 @@ jobs:
             git add .
             git status
             git commit -m "Applying changes from OSLOtheme repository ${CIRCLE_PROJECT_REPONAME}" --allow-empty
-            git push --force origin "${CIRCLE_BRANCH}"
+            git push --force origin master
 workflows:
   version: 2
   update_standards_register:
