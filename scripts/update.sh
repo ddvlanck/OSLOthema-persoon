@@ -18,7 +18,7 @@ for file in $(ls -p | grep -v /); do
     jq --arg file "$file" --arg COMMIT "$CURRENT_COMMIT" '. | map(if .configuration == $file then . + {"commitHash" : $COMMIT} else . end)' "$ROOTDIR/standaardenregister.json" > "$ROOTDIR/updated-register.json"
     echo "Updated standards register for ${CIRCLE_PROJECT_REPONAME} with new commit hash: $CURRENT_COMMIT"
   else
-    echo "$file is not present in the standards register"
+    echo "$file is not present in the standards register."
   fi
 done
 
