@@ -16,7 +16,7 @@ for file in $(ls -p | grep -v /); do
 ### TODO: find way to merge new object in array , current method is not working properly
     echo "RESULT: "
     #jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '. |= .+ [$UPDATED_OBJECT]' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
-    jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '. + $UPDATED_OBJECT | unique_by(.configuration)' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
+    jq --arg UPDATED_OBJECT "$UPDATED_OBJECT" '. + [$UPDATED_OBJECT] | unique_by(.configuration)' "$ROOTDIR/tmp-register.json" > "$ROOTDIR/tmp.json"
     cat "$ROOTDIR/tmp.json"
 
 ##TODO: UPDATED OBJECT SHOULD BE FORMATTED
