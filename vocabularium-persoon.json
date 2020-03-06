@@ -12,12 +12,13 @@
     }
   ],
   "documentatie": [],
-  "charter": [],
-  "verslagen": [
+  "charter": [
     {
       "naam": "Werkgroep Charter OSLO Persoon",
       "waarde": "Werkgroep Charter - OSLO Persoon.docx"
-    },
+    }
+  ],
+  "verslagen": [
     {
       "naam": "Verslag Thematische Werkgroep 1 - 2017-01-12",
       "waarde": "Verslag TWG1 Persoon 12012017.docx"
