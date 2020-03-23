@@ -12,32 +12,34 @@
     }
   ],
   "documentatie": [],
-  "verslagen_en_charter": [
+  "charter": [
     {
       "naam": "Werkgroep Charter OSLO Persoon",
       "waarde": "./charter/Werkgroep Charter - OSLO Persoon.docx"
-    },
+    }
+  ],
+  "verslagen": [
     {
       "naam": "Verslag Thematische Werkgroep 1 - 2017-01-12",
       "waarde": "./verslagen/Verslag TWG1 Persoon 12012017.docx"
     },
     {
-      "naam" : "Publieke Thematische Werkgroep 2 - 2017-03-15",
-      "waarde" : "./verslagen/Verslag TWG2 Persoon 15032017.doc"
+      "naam": "Publieke Thematische Werkgroep 2 - 2017-03-15",
+      "waarde": "./verslagen/Verslag TWG2 Persoon 15032017.doc"
     }
   ],
   "presentaties": [
     {
-      "naam" : "Publieke Werkgroep OSLO-Persoon 2017-01-12",
-      "waarde" : "./presentaties/OsloPersoonPubliekeWerkgroep20170112.pptx"
+      "naam": "Publieke Werkgroep OSLO-Persoon 2017-01-12",
+      "waarde": "./presentaties/OsloPersoonPubliekeWerkgroep20170112.pptx"
     },
     {
-      "naam" : "Publieke Werkgroep OSLO-Persoon 2017-03-15",
-      "waarde" : "./presentaties/OsloPersoonPubliekeWerkgroep20170315.pptx"
+      "naam": "Publieke Werkgroep OSLO-Persoon 2017-03-15",
+      "waarde": "./presentaties/OsloPersoonPubliekeWerkgroep20170315.pptx"
     },
     {
-      "naam" : "Webcast Persoon 2018-05-15",
-      "waarde" : "./presentaties/OSLO-Persoon.pptx"
+      "naam": "Webcast Persoon 2018-05-15",
+      "waarde": "./presentaties/OSLO-Persoon.pptx"
     }
   ],
   "functioneel_toepassingsgebied": "Semantische standaard voor informatie met betrekking tot personen",
